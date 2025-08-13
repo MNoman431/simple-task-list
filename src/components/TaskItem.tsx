@@ -32,18 +32,17 @@ const TaskItem: React.FC<TaskItemProps> = ({
   const isEditing = editingTaskId === task.id;
 
   return (
-    <li className="flex justify-between items-center py-2">
-      {/* Task description or input if editing */}
+    <li className="flex flex-col sm:flex-row justify-between items-center py-2 gap-2 sm:gap-4">
       {isEditing ? (
         <input
           type="text"
           value={editingText}
           onChange={e => setEditingText(e.target.value)}
-          className="flex-grow border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="w-full sm:flex-grow border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       ) : (
         <span
-          className={`flex-grow ${
+          className={`w-full sm:flex-grow ${
             task.completed ? 'line-through text-gray-400' : 'text-gray-900'
           }`}
         >
@@ -51,8 +50,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
         </span>
       )}
 
-      {/* Buttons */}
-      <div className="flex items-center space-x-2 ml-4">
+      <div className="flex flex-wrap justify-center gap-2">
         {!isEditing && (
           <button
             onClick={() => toggleComplete(task.id)}

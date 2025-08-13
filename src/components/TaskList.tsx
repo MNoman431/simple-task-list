@@ -12,39 +12,28 @@ const TaskList: React.FC = () => {
     const [newTask, setNewTask] = useState<string>('');
     const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
     const [editingText, setEditingText] = useState<string>('');
-
-    // New state for filtering
     const [filter, setFilter] = useState<'all' | 'completed' | 'incomplete'>('all');
 
-    // Add task
     const addTask = () => {
         if (!newTask.trim()) {
             alert("plz enter something");
             return;
         }
-
         const task: Task = {
             id: Date.now(),
             description: newTask,
             completed: false,
         };
-
         setTasks([...tasks, task]);
         setNewTask('');
     };
 
-    // Toggle complete
     const toggleComplete = (id: number) => {
-        const updatedTasks = tasks.map(task => {
-            if (task.id === id) {
-                return { ...task, completed: !task.completed };
-            }
-            return task;
-        });
-        setTasks(updatedTasks);
+        setTasks(tasks.map(task =>
+            task.id === id ? { ...task, completed: !task.completed } : task
+        ));
     };
 
-    // Delete task
     const deleteTask = (id: number) => {
         let userConfirm = confirm("Are you sure to delete this task?");
         if (userConfirm) {
@@ -52,75 +41,67 @@ const TaskList: React.FC = () => {
         }
     };
 
-    // Start edit
     const startEditTask = (id: number, currentText: string) => {
         setEditingTaskId(id);
         setEditingText(currentText);
     };
 
-    // Save edit
     const saveEditTask = () => {
         if (!editingText.trim()) return;
-
-        setTasks(
-            tasks.map(task =>
-                task.id === editingTaskId ? { ...task, description: editingText } : task
-            )
-        );
+        setTasks(tasks.map(task =>
+            task.id === editingTaskId ? { ...task, description: editingText } : task
+        ));
         alert("Task has been updated!");
         setEditingTaskId(null);
         setEditingText('');
     };
 
-    // Cancel edit
     const cancelEdit = () => {
         setEditingTaskId(null);
         setEditingText('');
     };
 
-    // Filter tasks based on filter state
     const filteredTasks = tasks.filter(task => {
         if (filter === 'completed') return task.completed;
         if (filter === 'incomplete') return !task.completed;
-        return true; // all
+        return true;
     });
 
     return (
-        <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto mt-10">
-            <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">Task List</h2>
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto mt-6">
+            <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-center text-gray-800">Task List</h2>
 
-            <div className="flex mb-4">
+            <div className="flex flex-col sm:flex-row mb-4 gap-2 sm:gap-0">
                 <input
                     type="text"
                     value={newTask}
                     onChange={e => setNewTask(e.target.value)}
                     placeholder="Add new task"
-                    className="flex-grow border border-gray-300 rounded-l px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="flex-grow border border-gray-300 rounded sm:rounded-l px-3 sm:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
                 <button
                     onClick={addTask}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700 transition"
+                    className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded sm:rounded-r hover:bg-blue-700 transition"
                 >
-                    Add the task
+                    Add Task
                 </button>
             </div>
 
-            {/* Filter buttons */}
-            <div className="flex justify-center space-x-4 mb-6">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-4 sm:mb-6">
                 <button
-                    className={`px-4 py-2 rounded ${filter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'} hover:bg-blue-500 transition`}
+                    className={`px-3 py-2 rounded ${filter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'} hover:bg-blue-500 transition`}
                     onClick={() => setFilter('all')}
                 >
                     All
                 </button>
                 <button
-                    className={`px-4 py-2 rounded ${filter === 'completed' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'} hover:bg-blue-500 transition`}
+                    className={`px-3 py-2 rounded ${filter === 'completed' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'} hover:bg-blue-500 transition`}
                     onClick={() => setFilter('completed')}
                 >
                     Completed
                 </button>
                 <button
-                    className={`px-4 py-2 rounded ${filter === 'incomplete' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'} hover:bg-blue-500 transition`}
+                    className={`px-3 py-2 rounded ${filter === 'incomplete' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'} hover:bg-blue-500 transition`}
                     onClick={() => setFilter('incomplete')}
                 >
                     Incomplete
