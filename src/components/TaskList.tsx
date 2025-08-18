@@ -24,6 +24,7 @@ const TaskList: React.FC = () => {
             description: newTask,
             completed: false,
         };
+        console.log("idhr task add hurha hai", task);
         setTasks([...tasks, task]);
         setNewTask('');
     };
@@ -83,7 +84,7 @@ const TaskList: React.FC = () => {
                     onClick={addTask}
                     className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded sm:rounded-r hover:bg-blue-700 transition"
                 >
-                    Add Task
+                    Add a Task
                 </button>
             </div>
 

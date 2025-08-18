@@ -42,9 +42,8 @@ const TaskItem: React.FC<TaskItemProps> = ({
         />
       ) : (
         <span
-          className={`w-full sm:flex-grow ${
-            task.completed ? 'line-through text-gray-400' : 'text-gray-900'
-          }`}
+          className={`w-full sm:flex-grow ${task.completed ? 'line-through text-gray-400' : 'text-gray-900'
+            }`}
         >
           {task.description}
         </span>
@@ -54,11 +53,10 @@ const TaskItem: React.FC<TaskItemProps> = ({
         {!isEditing && (
           <button
             onClick={() => toggleComplete(task.id)}
-            className={`px-3 py-1 rounded transition ${
-              task.completed
+            className={`px-3 py-1 rounded transition ${task.completed
                 ? 'bg-yellow-400 hover:bg-yellow-500 text-gray-900'
                 : 'bg-green-500 hover:bg-green-600 text-white'
-            }`}
+              }`}
             title={task.completed ? 'Undo Complete' : 'Mark Complete'}
           >
             {task.completed ? 'Uncheck' : 'Check'}
